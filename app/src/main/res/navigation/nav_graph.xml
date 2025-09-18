@@ -34,5 +34,10 @@
             android:name="com.example.lab_week_04.FavoriteFragment"
             android:label="My Favorite Coffee"
             tools:layout="@layout/fragment_favorite" />
-    </navigation>
+    <fragment
+        android:id="@+id/cafeFragment2"
+        android:name="com.example.lab_week_04.CafeFragment"
+        android:label="fragment_cafe"
+        tools:layout="@layout/fragment_cafe" />
+</navigation>
 

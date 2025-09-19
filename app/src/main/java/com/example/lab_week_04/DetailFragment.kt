@@ -6,47 +6,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.lab_week_04.ListFragment.Companion.COFFEE_ID
-import com.example.lab_week_04.R
+
+private const val TAB_CONTENT = "TAB_CONTENT"
 
 class DetailFragment : Fragment() {
-    private val coffeeTitle: TextView?
-        get() = view?.findViewById(R.id.coffee_title)
-    private val coffeeDesc: TextView?
-        get() = view?.findViewById(R.id.coffee_desc)
+    private var content: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            content = it.getString(TAB_CONTENT)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
-        setCoffeeData(coffeeId)
+        view.findViewById<TextView>(R.id.content_description)?.text = content
     }
 
-    private fun setCoffeeData(id: Int) {
-        when (id) {
-            R.id.affogato -> {
-                coffeeTitle?.text = getString(R.string.affogato_title)
-                coffeeDesc?.text = getString(R.string.affogato_desc)
+    companion object {
+        // <-- PERBAIKAN: parameter harus String, bukan Unit
+        fun newInstance(content: String) =
+            DetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(TAB_CONTENT, content)
+                }
             }
-            R.id.americano -> {
-                coffeeTitle?.text = getString(R.string.americano_title)
-                coffeeDesc?.text = getString(R.string.americano_desc)
-            }
-            R.id.latte -> {
-                coffeeTitle?.text = getString(R.string.latte_title)
-                coffeeDesc?.text = getString(R.string.latte_desc)
-            }
-        }
     }
 }
